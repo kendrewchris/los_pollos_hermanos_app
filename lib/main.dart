@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sushi_restaurant_app/pages/auth_page.dart';
+import 'package:los_pollos_hermanos_app/pages/auth_page.dart';
 
 void main() {
   runApp(const MyApp());

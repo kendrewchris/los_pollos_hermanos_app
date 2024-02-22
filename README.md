@@ -1,4 +1,4 @@
-# sushi_restaurant_app
+# sushi_resturant_app
 
 A new Flutter project.
 
