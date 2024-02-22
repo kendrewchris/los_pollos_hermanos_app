@@ -1,5 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/user_field.dart';
+import '../components/user_button.dart';
+import '../components/square_tile.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -9,80 +16,113 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  List<bool> isSelected = [
-    true,
-    false,
-  ];
 
+  //text editing controllers
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  signUserIn(){
+    Text('This will do something in the future');
+  }
+  
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 138, 60, 55),
+      backgroundColor: Colors.grey[300],
       body: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(19.0),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              //shop name
-              Text("FAT FISH",
-                  style: GoogleFonts.dmSerifDisplay(
-                    fontSize: 42,
-                    color: Colors.white,
-                  )),
-
               //icon
               Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Image.asset('./lib/images/nigiri.png'),
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset(
+                  './lib/images/logo.png', 
+                  height: 250,),
               ),
 
-              //title
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Taste of Japanese Food",
-                    style: GoogleFonts.dmSerifDisplay(
-                      fontSize: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+              //UserName Field
+              UserField(controller: usernameController, hintText: 'User Name', obscureText: false,),
+              //Password Field
+              UserField(controller: passwordController, hintText: 'Password', obscureText: true,),
 
-              //Log In and Register Row
-              SizedBox(
-                height: screenHeight * 0.1,
+              //forgot password
+              Padding(
+                padding: const EdgeInsets.only(top: 14),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ToggleButtons(
-                      fillColor: Colors.white10,
-                      onPressed: (int index) {
-                        setState(() {
-                          isSelected[index] = !isSelected[index];
-                        });
-                      },
-                      isSelected: isSelected,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text('Login'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text('Register'),
-                        ),
-                      ],
+                    Text(
+                      'Forgot Password?',
+                      style: GoogleFonts.dmSerifText(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
+              ),
+
+              //sign in button
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: UserButton(onTap: signUserIn(),),
+              ),
+
+              //divider
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text('Or continue with', style: TextStyle(color: Colors.black,),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              //google & apple sign in
+               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //apple button
+                  SquareTile(imagePath: './lib/images/google.png',),
+                  const SizedBox(width: 25,),
+                  //google button
+                  SquareTile(imagePath: './lib/images/apple.png',)
+                ],
+               ),
+
+
+              //user registration
+              Padding(
+                padding: const EdgeInsets.only(top: 35),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Not a member?', style: TextStyle(color: Colors.black,),),
+                    const SizedBox(width: 8,),
+                    Text('Register now', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                  ],
+                ),
               )
-              //get started button
             ],
           ),
         ),
@@ -91,56 +131,5 @@ class _AuthPageState extends State<AuthPage> {
   }
 }
 
-class LoginForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(labelText: 'Email'),
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Password'),
-            obscureText: true,
-          ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              // Login logic
-            },
-            child: Text('Login'),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-class RegisterForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(labelText: 'Email'),
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Password'),
-            obscureText: true,
-          ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              // Registration logic
-            },
-            child: Text('Register'),
-          ),
-        ],
-      ),
-    );
-  }
-}
+
