@@ -1,4 +1,4 @@
-# sushi_resturant_app
+# los_pollos_hermanos_app
 
 A new Flutter project.
 
